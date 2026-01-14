@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Promotions | CityWheelsPK</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="CSS/Promotion.css"/>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">CW</div>
+        <h2>CityWheelsPK</h2>
+      </div>
+       <nav>
+        <a href="/index.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="Ride.html"><i class="fas fa-route"></i> Rides</a>
+        <a href="Driver.html"><i class="fas fa-id-card-alt"></i> Drivers</a>
+        <a href="Passenger.html"><i class="fas fa-user-friends"></i>Passengers </a>
+        <a href="Vehicle.html"><i class="fas fa-car"></i> Veicle Management</a>
+        <a href="Promotion.html" class="active"><i class="fas fa-percentage"></i> Promotions</a>
+        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+        <a href="maintenance.html"><i class="fas fa-tools"></i> Maintenance</a>
+        <a href="payment.html"><i class="fas fa-credit-card"></i> Payment</a>
+        <a href="feedback.html"><i class="fas fa-comment-alt"></i>Feedback</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Promotion Management</h1>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Add New Promotion</h3>
+        </div>
+
+        <form id="promotionForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="code">Promo Code</label>
+              <div class="input-wrapper">
+                <i class="fas fa-tag"></i>
+                <input type="text" id="code" name="code" placeholder="e.g. RIDE20" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="discount">Discount Amount (Rs)</label>
+              <div class="input-wrapper">
+                <i class="fas fa-money-bill-wave"></i>
+                <input type="number" id="discount" name="discount" step="0.01" placeholder="e.g. 50.00">
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="description">Description</label>
+              <textarea id="description" name="description" placeholder="Short description..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="criteria">Eligibility Criteria</label>
+              <div class="input-wrapper">
+                <i class="fas fa-clipboard-check"></i>
+                <input type="text" id="criteria" name="criteria" placeholder="e.g. New users, First ride only">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="expiry">Expiry Date</label>
+              <div class="input-wrapper">
+                <i class="fas fa-calendar-times"></i>
+                <input type="date" id="expiry" name="expiry">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div class="support-text">Need assistance? <a href="/T&C/Contact.html">Contact Support</a></div>
+            <button type="submit" class="btn"><i class="fas fa-plus-circle"></i> Add Promotion</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Available Promotions</h3>
+        </div>
+        
+        <table>
+          <tr>
+            <th>Code</th>
+            <th>Description</th>
+            <th>Eligibility</th>
+            <th>Expires</th>
+            <th>Discount</th>
+          </tr>
+          <tr>
+            <td>SAVE10</td>
+            <td>Flat Rs 10 off</td>
+            <td>All users</td>
+            <td>2024-06-01</td>
+            <td>10.00</td>
+          </tr>
+          <tr>
+            <td>RIDE20</td>
+            <td>Rs 20 for new users</td>
+            <td>New users</td>
+            <td>2024-06-15</td>
+            <td>20.00</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="toast">
+        <i class="fas fa-gift"></i>
+        🎉 10% discount for new users! Use code <strong>WELCOME10</strong> at checkout.
+      </div>
+    </main>
+  </div>
+  <script>
+   document.getElementById('promotionForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const formData = {
+    code: document.getElementById('code').value,
+    description: document.getElementById('description').value,
+    criteria: document.getElementById('criteria').value,
+    expiry: document.getElementById('expiry').value,
+    discount: document.getElementById('discount').value
+  };
+
+  try {
+    const response = await fetch('/api/promotions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+    
+    const result = await response.json();
+    
+    if (!response.ok || !result.success) {
+      throw new Error(result.error || 'Failed to add promotion');
+    }
+    
+    alert(`✅ Promotion added successfully! ID: ${result.promotionId}`);
+    document.getElementById('promotionForm').reset();
+    
+  } catch (err) {
+    alert(`❌ Error: ${err.message}`);
+    console.error('Error details:', err);
+  }
+});
+  </script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!-- vehicle.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vehicle Entry | CityWheelsPK</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="CSS/Vehicle.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">CW</div>
+        <h2>CityWheelsPK</h2>
+      </div>
+      <nav>
+        <a href="/index.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="Ride.html"><i class="fas fa-route"></i> Rides</a>
+        <a href="Driver.html"><i class="fas fa-id-card-alt"></i> Drivers</a>
+        <a href="Passenger.html"><i class="fas fa-user-friends"></i>Passengers </a>
+        <a href="Vehicle.html" class="active"><i class="fas fa-car"></i> Vehicle Management</a>
+        <a href="Promotion.html"><i class="fas fa-percentage"></i> Promotions</a>
+        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+        <a href="maintenance.html"><i class="fas fa-tools"></i> Maintenance</a>
+        <a href="payment.html"><i class="fas fa-credit-card"></i> Payment</a>
+        <a href="feedback.html"><i class="fas fa-comment-alt"></i>Feedback</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Vehicle Management</h1>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Vehicle Entry</h3>
+        </div>
+
+        <form id="vehicleForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="driverID">Driver ID</label>
+              <div class="input-wrapper">
+                <i class="fas fa-id-card-alt"></i>
+                <input type="number" id="driverID" name="driverID" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="make">Vehicle Make</label>
+              <div class="input-wrapper">
+                <i class="fas fa-car"></i>
+                <input type="text" id="make" name="make" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="licensePlate">License Plate</label>
+              <div class="input-wrapper">
+                <i class="fas fa-tag"></i>
+                <input type="text" id="licensePlate" name="licensePlate" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="color">Vehicle Color</label>
+              <div class="input-wrapper">
+                <i class="fas fa-palette"></i>
+                <input type="text" id="color" name="color" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="vehicleType">Vehicle Type</label>
+              <div class="input-wrapper">
+                <i class="fas fa-truck-pickup"></i>
+                <select id="vehicleType" name="vehicleType" required>
+                  <option value="Car">Car</option>
+                  <option value="Bike">Bike</option>
+                  <option value="Van">Van</option>
+                  <option value="Rickshaw">Rickshaw</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="insurancePolicyNumber">Insurance Policy Number</label>
+              <div class="input-wrapper">
+                <i class="fas fa-file-contract"></i>
+                <input type="text" id="insurancePolicyNumber" name="insurancePolicyNumber" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="capacity">Seating Capacity</label>
+              <div class="input-wrapper">
+                <i class="fas fa-users"></i>
+                <input type="number" id="capacity" name="capacity" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="childSeatAvailable">Child Seat Available</label>
+              <div class="input-wrapper">
+                <input type="checkbox" id="childSeatAvailable" name="childSeatAvailable" />
+                <label for="childSeatAvailable">Yes</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div class="support-text">Need assistance? <a href="/T&C/Contact.html">Contact Support</a></div>
+            <button type="submit" class="btn"><i class="fas fa-save"></i> Save Vehicle</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+  document.getElementById('vehicleForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Simple validation
+    const requiredFields = ['driverID', 'make', 'licensePlate', 'color', 'insurancePolicyNumber', 'capacity'];
+    const missingFields = requiredFields.filter(field => !document.getElementById(field).value);
+    
+    if (missingFields.length > 0) {
+        alert(`Please fill in all required fields: ${missingFields.join(', ')}`);
+        return;
+    }
+
+    // Prepare form data
+    const formData = {
+        driverID: document.getElementById('driverID').value,
+        make: document.getElementById('make').value,
+        licensePlate: document.getElementById('licensePlate').value.trim(),
+        color: document.getElementById('color').value.trim(),
+        vehicleType: document.getElementById('vehicleType').value,
+        insurancePolicyNumber: document.getElementById('insurancePolicyNumber').value.trim(),
+        capacity: parseInt(document.getElementById('capacity').value),
+        childSeatAvailable: document.getElementById('childSeatAvailable').checked
+    };
+
+    try {
+        const response = await fetch('/api/vehicles', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            let errorMsg = result.error || 'Failed to add vehicle';
+            if (result.details) {
+                if (result.details.sqlMessage) {
+                    errorMsg += ` (SQL: ${result.details.sqlMessage})`;
+                } else if (result.details.missing) {
+                    const missing = Object.entries(result.details.missing)
+                        .filter(([_, val]) => val)
+                        .map(([key]) => key);
+                    if (missing.length) {
+                        errorMsg += ` (Missing: ${missing.join(', ')})`;
+                    }
+                }
+            }
+            throw new Error(errorMsg);
+        }
+
+        alert(`✅ ${result.message}\nVehicle ID: ${result.vehicleId}`);
+        document.getElementById('vehicleForm').reset();
+    } catch (err) {
+        console.error('Submission error:', err);
+        alert(`Error: ${err.message}`);
+    }
+});
+</script>
+</body>
+</html>

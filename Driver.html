@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ڈرائیور پروفائل | CityWheelsPK</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="CSS/Driver.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">CW</div>
+        <h2>CityWheelsPK</h2>
+      </div>
+      <nav>
+        <a href="/IndexUrdu.html"><i class="fas fa-home"></i> ڈیش بورڈ</a>
+          <a href="Ride.html"><i class="fas fa-route"></i> رائڈز</a>
+        <a href="Driver.html" class="active"><i class="fas fa-id-card-alt"></i> ڈرائیورز</a>
+        <a href="Passenger.html"><i class="fas fa-user-friends"></i>مسافر</a>
+        <a href="Vehicle.html"><i class="fas fa-car"></i> گاڑی کا انتظام</a>
+        <a href="Promotion.html"><i class="fas fa-percentage"></i> پروموشنز</a>
+        <a href="support.html"><i class="fas fa-headset"></i> سپورٹ</a>
+        <a href="maintenance.html"><i class="fas fa-tools"></i> مرمت</a>
+        <a href="payment.html"><i class="fas fa-credit-card"></i> ادائیگی</a>
+        <a href="feedback.html"><i class="fas fa-comment-alt"></i>فیڈ بیک</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>ڈرائیور پروفائل</h1>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>ڈرائیور کی معلومات میں ترمیم کریں</h3>
+        </div>
+
+        <form id="driverForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">مکمل نام</label>
+              <div class="input-wrapper">
+                <i class="fas fa-user"></i>
+                <input type="text" id="name" name="name" placeholder="Driver Name" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="status">حالت</label>
+              <div class="input-wrapper">
+                <i class="fas fa-toggle-on"></i>
+                <select id="status" name="status">
+                  <option value="Available">دستیاب</option>
+                  <option value="Unavailable">غیر دستیاب</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="schedule">شیڈول</label>
+              <div class="input-wrapper">
+                <i class="fas fa-clock"></i>
+                <select id="schedule" name="schedule">
+                  <option value="Full-time">فل ٹائم</option>
+                  <option value="Part-time">پارٹ ٹائم</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="rating">ریٹنگ</label>
+              <div class="input-wrapper">
+                <i class="fas fa-star"></i>
+                <input type="number" id="rating" name="rating" placeholder="1-5" min="1" max="5">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="insurance">انشورنس دستاویز ID</label>
+              <div class="input-wrapper">
+                <i class="fas fa-file-alt"></i>
+                <input type="text" id="insurance" name="insurance" placeholder="INSxxxx">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="license">لائسنس نمبر</label>
+              <div class="input-wrapper">
+                <i class="fas fa-id-card"></i>
+                <input type="text" id="license" name="license" placeholder="LICxxxx">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="contact">رابطہ نمبر</label>
+              <div class="input-wrapper">
+                <i class="fas fa-phone"></i>
+                <input type="text" id="contact" name="contact" placeholder="03XXXXXXXXX">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="payment">ترجیحی ادائیگی</label>
+              <div class="input-wrapper">
+                <i class="fas fa-credit-card"></i>
+                <select id="payment" name="payment">
+                  <option value="Card">کارڈ</option>
+                  <option value="Cash">کیش</option>
+                  <option value="Wallet">والیٹ</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div class="support-text">مدد درکار ہے؟ <a href="/T&C/URContact.html">سپورٹ سے رابطہ کریں</a></div>
+            <button type="submit" class="btn"><i class="fas fa-save"></i> ڈرائیور محفوظ کریں</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+  
+<script>
+document.getElementById('driverForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const formData = {
+    name: document.getElementById('name').value,
+    contactNo: document.getElementById('contact').value,
+    status: document.getElementById('status').value,
+    schedule: document.getElementById('schedule').value,
+    rating: document.getElementById('rating').value,
+    insuranceDocument: document.getElementById('insurance').value,
+    drivingLicenseNumber: document.getElementById('license').value,
+    preferredPaymentMethod: document.getElementById('payment').value
+  };
+
+  try {
+    const response = await fetch('/api/drivers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+    
+    const result = await response.json();
+    
+    if (!response.ok) throw new Error(result.error || 'Failed to add driver');
+    
+    alert(`✅ Driver added successfully! ID: ${result.driverId}`);
+    document.getElementById('driverForm').reset();
+  } catch (err) {
+    alert(`❌ Error: ${err.message}`);
+    console.error('Error:', err);
+  }
+});
+</script>
+</body>
+</html>
