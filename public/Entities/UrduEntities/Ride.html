@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>رائڈ بکنگ | سٹی وہیلز پاکستان</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="CSS/Ride.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">CW</div>
+          <h2>CityWheelsPK</h2>
+      </div>
+       <nav>
+        <a href="/IndexUrdu.html"><i class="fas fa-home"></i> ڈیش بورڈ</a>
+          <a href="Ride.html"><i class="fas fa-route"></i> رائڈز</a>
+        <a href="Driver.html"><i class="fas fa-id-card-alt"></i> ڈرائیورز</a>
+        <a href="Passenger.html"><i class="fas fa-user-friends"></i>مسافر</a>
+        <a href="Vehicle.html"><i class="fas fa-car"></i> گاڑی کا انتظام</a>
+        <a href="Promotion.html"><i class="fas fa-percentage"></i> پروموشنز</a>
+        <a href="support.html"><i class="fas fa-headset"></i> سپورٹ</a>
+        <a href="maintenance.html"><i class="fas fa-tools"></i> مرمت</a>
+        <a href="payment.html"><i class="fas fa-credit-card"></i> ادائیگی</a>
+        <a href="feedback.html"><i class="fas fa-comment-alt"></i>فیڈ بیک</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>رائڈ بک کریں</h1>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>رائڈ بکنگ کی تفصیلات</h3>
+        </div>
+
+        <form id="rideForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="pickup">پک اپ لوکیشن</label>
+              <div class="input-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" id="pickup" name="pickup" placeholder="پک اپ پوائنٹ درج کریں" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="dropoff">ڈراپ آف لوکیشن</label>
+              <div class="input-wrapper">
+                <i class="fas fa-flag-checkered"></i>
+                <input type="text" id="dropoff" name="dropoff" placeholder="ڈراپ آف پوائنٹ درج کریں" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="datetime">تاریخ اور وقت</label>
+              <div class="input-wrapper">
+                <i class="fas fa-calendar-alt"></i>
+                <input type="datetime-local" id="datetime" name="datetime" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="passenger">مسافر</label>
+              <div class="input-wrapper">
+                <i class="fas fa-user"></i>
+                <select id="passenger" name="passenger" required>
+                  <option value="" disabled selected>مسافر منتخب کریں</option>
+                  <option value="201">عائشہ نور</option>
+                  <option value="202">زین ملک</option>
+                  <option value="203">فاطمہ شاہ</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="driver">ڈرائیور</label>
+              <div class="input-wrapper">
+                <i class="fas fa-id-card-alt"></i>
+                <select id="driver" name="driver" required>
+                  <option value="" disabled selected>ڈرائیور منتخب کریں</option>
+                  <option value="101">علی رضا</option>
+                  <option value="102">احمد خان</option>
+                  <option value="103">بلال طارق</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="vehicle">گاڑی</label>
+              <div class="input-wrapper">
+                <i class="fas fa-car"></i>
+                <select id="vehicle" name="vehicle" required>
+                  <option value="" disabled selected>گاڑی منتخب کریں</option>
+                  <option value="301">ٹویوٹا - LEA-1234</option>
+                  <option value="302">ہونڈا - LHR-5678</option>
+                  <option value="303">سوزوکی - ISB-9012</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="promo">پرومو کوڈ (اختیاری)</label>
+              <div class="input-wrapper">
+                <i class="fas fa-tag"></i>
+                <select id="promo" name="promo">
+                  <option value="">کوئی نہیں</option>
+                  <option value="401">SAVE10</option>
+                  <option value="402">RIDE20</option>
+                  <option value="403">CITY5</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="fare">کرایہ (پاکستانی روپے)</label>
+              <div class="input-wrapper">
+                <i class="fas fa-money-bill-wave"></i>
+                <input type="number" id="fare" name="fare" step="0.01" placeholder="مثال کے طور پر 650.00" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="status">رائڈ کی حالت</label>
+              <div class="input-wrapper">
+                <i class="fas fa-info-circle"></i>
+                <select id="status" name="status" required>
+                  <option value="Pending">زیر التوا</option>
+                  <option value="Completed">مکمل</option>
+                  <option value="Cancelled">منسوخ</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <div class="support-text">مدد درکار؟ <a href="/T&C/URContact.html">سپورٹ سے رابطہ کریں</a></div>
+              <button type="submit" class="btn"><i class="fas fa-check-circle"></i> بکنگ کی تصدیق کریں</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+  <script>
+ document.addEventListener('DOMContentLoaded', function() {
+    // Set default datetime
+    document.getElementById('datetime').value = new Date().toISOString().slice(0, 16);
+    
+    // Hardcode vehicle options that match your database
+    const vehicles = [
+        {VehicleID: 301, Make: 'Toyota', LicensePlate: 'LEA-1234'},
+        {VehicleID: 302, Make: 'Honda', LicensePlate: 'LHR-5678'},
+        {VehicleID: 303, Make: 'Suzuki', LicensePlate: 'ISB-9012'}
+    ];
+    
+    // Populate vehicle dropdown
+    const vehicleSelect = document.getElementById('vehicle');
+    vehicleSelect.innerHTML = '<option value="" disabled selected>Select Vehicle</option>';
+    
+    vehicles.forEach(vehicle => {
+        const option = document.createElement('option');
+        option.value = vehicle.VehicleID;
+        option.textContent = `${vehicle.Make} (${vehicle.LicensePlate})`;
+        vehicleSelect.appendChild(option);
+    });
+
+    // Form submission
+    document.getElementById('rideForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            pickUpLocation: document.getElementById('pickup').value,
+            dropOffLocation: document.getElementById('dropoff').value,
+            passenger: document.getElementById('passenger').value,
+            driver: document.getElementById('driver').value,
+            vehicle: document.getElementById('vehicle').value
+        };
+        
+        try {
+            const response = await fetch('/api/rides', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok) {
+                alert(`SUCCESS! ${result.message}\nDriver: ${result.driverName}\nVehicle: ${result.vehicleMake}\nFare: PKR ${result.fare}`);
+                // Clear form
+                document.getElementById('pickup').value = '';
+                document.getElementById('dropoff').value = '';
+            } else {
+                throw new Error(result.error || 'Booking failed');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert(`ERROR: ${error.message}`);
+        }
+    });
+});
+</script>
+</body>
+</html>

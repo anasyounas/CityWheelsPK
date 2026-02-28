@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ادائیگی کی رسید | سٹی وہیلز پاکستان</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="CSS/Payment.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">CW</div>
+           <h2>CityWheelsPK</h2>
+      </div>
+       <nav>
+        <a href="/IndexUrdu.html"><i class="fas fa-home"></i> ڈیش بورڈ</a>
+          <a href="Ride.html"><i class="fas fa-route"></i> رائڈز</a>
+        <a href="Driver.html"><i class="fas fa-id-card-alt"></i> ڈرائیورز</a>
+        <a href="Passenger.html"><i class="fas fa-user-friends"></i>مسافر </a>
+        <a href="Vehicle.html"><i class="fas fa-car"></i> گاڑیوں کا انتظام</a>
+        <a href="Promotion.html"><i class="fas fa-percentage"></i> پروموشنز</a>
+        <a href="support.html"><i class="fas fa-headset"></i> سپورٹ</a>
+        <a href="maintenance.html"><i class="fas fa-tools"></i> مرمت</a>
+        <a href="payment.html" class="active"><i class="fas fa-credit-card"></i> ادائیگی</a>
+        <a href="feedback.html"><i class="fas fa-comment-alt"></i>فیڈ بیک</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>ادائیگی کی رسید</h1>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>ادائیگی کی تفصیلات</h3>
+        </div>
+
+        <form class="receipt-details">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="rideId">سواری آئی ڈی</label>
+              <div class="input-wrapper">
+                <i class="fas fa-barcode"></i>
+                <select id="rideId" name="rideId">
+                  <option value="601">سواری 601</option>
+                  <option value="602">سواری 602</option>
+                  <option value="603">سواری 603</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="paymentMethod">ادائیگی کا طریقہ</label>
+              <div class="input-wrapper">
+                <i class="fas fa-wallet"></i>
+                <select id="paymentMethod" name="paymentMethod">
+                  <option value="Card">کارڈ</option>
+                  <option value="Cash">نقد</option>
+                  <option value="Wallet">والٹ</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="transactionDate">لین دین کی تاریخ</label>
+              <div class="input-wrapper">
+                <i class="fas fa-calendar-alt"></i>
+                <input type="date" id="transactionDate" name="transactionDate">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="amount">ادائیگی کی رقم (پاکستانی روپے)</label>
+              <div class="input-wrapper">
+                <i class="fas fa-money-bill-wave"></i>
+                <input type="number" step="0.01" id="amount" name="amount">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="paymentStatus">ادائیگی کی حالت</label>
+              <div class="input-wrapper">
+                <i class="fas fa-check-circle"></i>
+                <select id="paymentStatus" name="paymentStatus">
+                  <option value="Completed">مکمل</option>
+                  <option value="Pending">زیر التوا</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div class="support-text">مدد درکار ہے؟ <a href="/T&C/URContact.html">سپورٹ سے رابطہ کریں</a></div>
+            <button type="submit" class="btn"><i class="fas fa-check"></i> ادائیگی کی تصدیق</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+  <script>
+    // Combo box functionality
+    const rideIdInput = document.getElementById('rideIdInput');
+    const rideOptions = document.getElementById('rideOptions');
+    const hiddenRideId = document.getElementById('rideId');
+    const options = document.querySelectorAll('.combo-option');
+    
+    // Show options when input is focused
+    rideIdInput.addEventListener('focus', () => {
+      rideOptions.classList.add('show');
+      filterOptions();
+    });
+    
+    // Hide options when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!rideIdInput.contains(e.target) && !rideOptions.contains(e.target)) {
+        rideOptions.classList.remove('show');
+      }
+    });
+    
+    // Filter options based on input
+    rideIdInput.addEventListener('input', filterOptions);
+    
+    function filterOptions() {
+      const searchTerm = rideIdInput.value.toLowerCase();
+      options.forEach(option => {
+        const text = option.textContent.toLowerCase();
+        if (text.includes(searchTerm)) {
+          option.style.display = 'block';
+        } else {
+          option.style.display = 'none';
+        }
+      });
+    }
+    
+    // Select option
+    options.forEach(option => {
+      option.addEventListener('click', () => {
+        rideIdInput.value = option.textContent;
+        hiddenRideId.value = option.getAttribute('data-value');
+        rideOptions.classList.remove('show');
+      });
+    });
+    
+    // Allow custom input
+    rideIdInput.addEventListener('change', () => {
+      hiddenRideId.value = rideIdInput.value;
+    });
+    
+    // Form submission
+    document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Make sure we're using the correct ride ID value
+      if (!hiddenRideId.value && rideIdInput.value) {
+        hiddenRideId.value = rideIdInput.value;
+      }
+      
+      const formData = {
+        rideId: hiddenRideId.value,
+        paymentMethod: document.getElementById('paymentMethod').value,
+        amount: document.getElementById('amount').value,
+        paymentStatus: document.getElementById('paymentStatus').value
+      };
+
+      try {
+        const response = await fetch('/api/payments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        
+        const result = await response.json();
+        
+        if (!response.ok) throw new Error(result.error || 'Failed to record payment');
+        
+        alert(`✅ Payment recorded successfully! ID: ${result.paymentId}`);
+        document.getElementById('paymentForm').reset();
+      } catch (err) {
+        alert(`❌ Error: ${err.message}`);
+        console.error('Error:', err);
+      }
+    });
+  </script>
+</body>
+</html>

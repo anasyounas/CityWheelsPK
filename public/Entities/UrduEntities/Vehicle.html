@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>گاڑی کی اندراج | سٹی وہیلز پاکستان</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="CSS/Vehicle.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">CW</div>
+           <h2>CityWheelsPK</h2>
+      </div>
+         <nav>
+        <a href="/IndexUrdu.html"><i class="fas fa-home"></i> ڈیش بورڈ</a>
+          <a href="Ride.html"><i class="fas fa-route"></i> رائڈز</a>
+        <a href="Driver.html"><i class="fas fa-id-card-alt"></i> ڈرائیورز</a>
+        <a href="Passenger.html"><i class="fas fa-user-friends"></i>مسافر </a>
+        <a href="Vehicle.html" class="active"><i class="fas fa-car"></i> گاڑی کا انتظام</a>
+        <a href="Promotion.html"><i class="fas fa-percentage"></i> پروموشنز</a>
+        <a href="support.html"><i class="fas fa-headset"></i> سپورٹ</a>
+        <a href="maintenance.html"><i class="fas fa-tools"></i> مرمت</a>
+        <a href="payment.html"><i class="fas fa-credit-card"></i> ادائیگی</a>
+        <a href="feedback.html"><i class="fas fa-comment-alt"></i>فیڈ بیک</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>گاڑی کا انتظام</h1>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>گاڑی کی اندراج</h3>
+        </div>
+
+        <form id="vehicleForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="driverID">ڈرائیور آئی ڈی</label>
+              <div class="input-wrapper">
+                <i class="fas fa-id-card-alt"></i>
+                <input type="number" id="driverID" name="driverID" placeholder="متعلقہ ڈرائیور آئی ڈی درج کریں" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="model">گاڑی کا ماڈل</label>
+              <div class="input-wrapper">
+                <i class="fas fa-car"></i>
+                <input type="text" id="model" name="model" placeholder="مثال: ٹویوٹا کورولا">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="plate">لیسنس پلیٹ</label>
+              <div class="input-wrapper">
+                <i class="fas fa-tag"></i>
+                <input type="text" id="plate" name="plate" placeholder="مثال: ABC-123">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="color">گاڑی کا رنگ</label>
+              <div class="input-wrapper">
+                <i class="fas fa-palette"></i>
+                <input type="text" id="color" name="color" placeholder="مثال: سفید">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="type">گاڑی کی قسم</label>
+              <div class="input-wrapper">
+                <i class="fas fa-truck-pickup"></i>
+                <select id="type" name="type">
+                  <option value="Car">کار</option>
+                  <option value="Bike">موٹر سائیکل</option>
+                  <option value="Van">ویں</option>
+                  <option value="Rickshaw">رکشہ</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="insurance">انشورنس پالیسی نمبر</label>
+              <div class="input-wrapper">
+                <i class="fas fa-file-contract"></i>
+                <input type="text" id="insurance" name="insurance" placeholder="INS-XXXXXX">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="capacity">بیٹھنے کی گنجائش</label>
+              <div class="input-wrapper">
+                <i class="fas fa-users"></i>
+                <input type="number" id="capacity" name="capacity" placeholder="مثال: 4">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div class="support-text">مدد درکار؟ <a href="/T&C/URContact.html">سپورٹ سے رابطہ کریں</a></div>
+            <button type="submit" class="btn"><i class="fas fa-save"></i> گاڑی محفوظ کریں</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  
+  <script>
+  document.getElementById('vehicleForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Simple validation
+    const requiredFields = ['driverID', 'make', 'licensePlate', 'color', 'insurancePolicyNumber', 'capacity'];
+    const missingFields = requiredFields.filter(field => !document.getElementById(field).value);
+    
+    if (missingFields.length > 0) {
+        alert(`Please fill in all required fields: ${missingFields.join(', ')}`);
+        return;
+    }
+
+    // Prepare form data
+    const formData = {
+        driverID: document.getElementById('driverID').value,
+        make: document.getElementById('make').value,
+        licensePlate: document.getElementById('licensePlate').value.trim(),
+        color: document.getElementById('color').value.trim(),
+        vehicleType: document.getElementById('vehicleType').value,
+        insurancePolicyNumber: document.getElementById('insurancePolicyNumber').value.trim(),
+        capacity: parseInt(document.getElementById('capacity').value),
+        childSeatAvailable: document.getElementById('childSeatAvailable').checked
+    };
+
+    try {
+        const response = await fetch('/api/vehicles', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            let errorMsg = result.error || 'Failed to add vehicle';
+            if (result.details) {
+                if (result.details.sqlMessage) {
+                    errorMsg += ` (SQL: ${result.details.sqlMessage})`;
+                } else if (result.details.missing) {
+                    const missing = Object.entries(result.details.missing)
+                        .filter(([_, val]) => val)
+                        .map(([key]) => key);
+                    if (missing.length) {
+                        errorMsg += ` (Missing: ${missing.join(', ')})`;
+                    }
+                }
+            }
+            throw new Error(errorMsg);
+        }
+
+        alert(`✅ ${result.message}\nVehicle ID: ${result.vehicleId}`);
+        document.getElementById('vehicleForm').reset();
+    } catch (err) {
+        console.error('Submission error:', err);
+        alert(`Error: ${err.message}`);
+    }
+});
+</script>
+</body>
+</html>

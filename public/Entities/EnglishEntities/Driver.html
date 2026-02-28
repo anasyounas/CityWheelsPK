@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Driver Profile | CityWheelsPK</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="CSS/Driver.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">CW</div>
+        <h2>CityWheelsPK</h2>
+      </div>
+      <nav>
+        <a href="/index.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="Ride.html"><i class="fas fa-route"></i> Rides</a>
+        <a href="Driver.html" class="active"><i class="fas fa-id-card-alt"></i> Drivers</a>
+        <a href="Passenger.html"><i class="fas fa-user-friends"></i>Passengers </a>
+        <a href="Vehicle.html"><i class="fas fa-car"></i> Veicle Management</a>
+        <a href="Promotion.html"><i class="fas fa-percentage"></i> Promotions</a>
+        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+        <a href="maintenance.html"><i class="fas fa-tools"></i> Maintenance</a>
+        <a href="payment.html"><i class="fas fa-credit-card"></i> Payment</a>
+        <a href="feedback.html"><i class="fas fa-comment-alt"></i>Feedback</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Driver Profile</h1>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Edit Driver Information</h3>
+        </div>
+
+        <form id="driverForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <div class="input-wrapper">
+                <i class="fas fa-user"></i>
+                <input type="text" id="name" name="name" placeholder="Driver Name" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="status">Status</label>
+              <div class="input-wrapper">
+                <i class="fas fa-toggle-on"></i>
+                <select id="status" name="status">
+                  <option value="Available">Available</option>
+                  <option value="Unavailable">Unavailable</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="schedule">Schedule</label>
+              <div class="input-wrapper">
+                <i class="fas fa-clock"></i>
+                <select id="schedule" name="schedule">
+                  <option value="Full-time">Full-time</option>
+                  <option value="Part-time">Part-time</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="rating">Rating</label>
+              <div class="input-wrapper">
+                <i class="fas fa-star"></i>
+                <input type="number" id="rating" name="rating" placeholder="1-5" min="1" max="5">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="insurance">Insurance Document ID</label>
+              <div class="input-wrapper">
+                <i class="fas fa-file-alt"></i>
+                <input type="text" id="insurance" name="insurance" placeholder="INSxxxx">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="license">License Number</label>
+              <div class="input-wrapper">
+                <i class="fas fa-id-card"></i>
+                <input type="text" id="license" name="license" placeholder="LICxxxx">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="contact">Contact Number</label>
+              <div class="input-wrapper">
+                <i class="fas fa-phone"></i>
+                <input type="text" id="contact" name="contact" placeholder="03XXXXXXXXX">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="payment">Preferred Payment</label>
+              <div class="input-wrapper">
+                <i class="fas fa-credit-card"></i>
+                <select id="payment" name="payment">
+                  <option value="Card">Card</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Wallet">Wallet</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div class="support-text">Need assistance? <a href="/T&C/Contact.html">Contact Support</a></div>
+            <button type="submit" class="btn"><i class="fas fa-save"></i> Save Driver</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+<script>
+document.getElementById('driverForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const formData = {
+    name: document.getElementById('name').value,
+    contactNo: document.getElementById('contact').value,
+    status: document.getElementById('status').value,
+    schedule: document.getElementById('schedule').value,
+    rating: document.getElementById('rating').value,
+    insuranceDocument: document.getElementById('insurance').value,
+    drivingLicenseNumber: document.getElementById('license').value,
+    preferredPaymentMethod: document.getElementById('payment').value
+  };
+
+  try {
+    const response = await fetch('/api/drivers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+    
+    const result = await response.json();
+    
+    if (!response.ok) throw new Error(result.error || 'Failed to add driver');
+    
+    alert(`✅ Driver added successfully! ID: ${result.driverId}`);
+    document.getElementById('driverForm').reset();
+  } catch (err) {
+    alert(`❌ Error: ${err.message}`);
+    console.error('Error:', err);
+  }
+});
+</script>
+</body>
+</html>

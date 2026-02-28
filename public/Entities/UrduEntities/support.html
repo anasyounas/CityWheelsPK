@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>سپورٹ درخواست | سٹی وہیلز پاکستان</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="CSS/Support.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">CW</div>
+           <h2>CityWheelsPK</h2>
+      </div>
+       <nav>
+        <a href="/IndexUrdu.html"><i class="fas fa-home"></i> ڈیش بورڈ</a>
+          <a href="Ride.html"><i class="fas fa-route"></i> رائڈز</a>
+        <a href="Driver.html"><i class="fas fa-id-card-alt"></i> ڈرائیورز</a>
+        <a href="Passenger.html"><i class="fas fa-user-friends"></i>مسافر </a>
+        <a href="Vehicle.html"><i class="fas fa-car"></i> گاڑی کا انتظام</a>
+        <a href="Promotion.html"><i class="fas fa-percentage"></i> پروموشنز</a>
+        <a href="support.html" class="active"><i class="fas fa-headset"></i> سپورٹ</a>
+        <a href="maintenance.html"><i class="fas fa-tools"></i> مرمت</a>
+        <a href="payment.html"><i class="fas fa-credit-card"></i> ادائیگی</a>
+        <a href="feedback.html"><i class="fas fa-comment-alt"></i>فیڈ بیک</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>سپورٹ سنٹر</h1>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>سپورٹ درخواست جمع کروائیں</h3>
+        </div>
+
+        <form id="supportForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="ride">سواری</label>
+              <div class="input-wrapper">
+                <i class="fas fa-route"></i>
+                <select id="ride" name="ride">
+                  <option value="" disabled selected>سواری منتخب کریں</option>
+                  <option value="601">علی رضا : ٹویوٹا</option>
+                  <option value="602">احمد خان : ہونڈا</option>
+                  <option value="603">بلال طارق : سوزوکی</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="passenger">مسافر</label>
+              <div class="input-wrapper">
+                <i class="fas fa-user"></i>
+                <select id="passenger" name="passenger">
+                  <option value="" disabled selected>مسافر منتخب کریں</option>
+                  <option value="201">عائشہ نور</option>
+                  <option value="202">زین ملک</option>
+                  <option value="203">فاطمہ شاہ</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="status">حل کی حیثیت</label>
+              <div class="input-wrapper">
+                <i class="fas fa-check-circle"></i>
+                <select id="status" name="status">
+                  <option>زیر التوا</option>
+                  <option>حل شدہ</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="date">جمع کرانے کی تاریخ</label>
+              <div class="input-wrapper">
+                <i class="fas fa-calendar-alt"></i>
+                <input type="datetime-local" id="date" name="date" required>
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="issue">مسئلے کی تفصیل</label>
+              <textarea id="issue" name="issue" placeholder="مسئلے کی تفصیل بیان کریں..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div class="support-text">فوری مدد چاہیے؟ 
+              <a href="/T&C/URContact.html" style="color: var(--primary); text-decoration: underline;">سپورٹ کو کال کریں</a>
+            </div>
+            <button type="submit" class="btn">
+              <i class="fas fa-paper-plane"></i> درخواست جمع کروائیں
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+  <script>
+    document.getElementById('supportForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const formData = {
+    rideId: document.getElementById('ride').value,
+    passengerId: document.getElementById('passenger').value,
+    issueDescription: document.getElementById('issue').value
+  };
+
+  try {
+    const response = await fetch('/api/support', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+    
+    const result = await response.json();
+    
+    if (!response.ok) throw new Error(result.error || 'Failed to submit request');
+    
+    alert(`✅ Support request submitted successfully! ID: ${result.requestId}`);
+    document.getElementById('supportForm').reset();
+  } catch (err) {
+    alert(`❌ Error: ${err.message}`);
+    console.error('Error:', err);
+  }
+});
+  </script>
+</body>
+</html>

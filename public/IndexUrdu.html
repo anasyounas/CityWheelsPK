@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ur" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سٹی وہیلز پاکستان - آپ کی قابل اعتماد رائڈ شیئرنگ سروس</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .hero-background {
+      background-image: url("https://images.unsplash.com/photo-1559827291-72ee739d0d9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .booking-section {
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2.5em;
+      padding: 3.5em 2em;
+      background-color: #fff;
+    }
+
+    .service {
+      background-color: #e9f3ff;
+      padding: 2em 1.5em;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 6px 10px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .service:hover {
+      transform: translateY(-6px);
+      background-color: #d6ecff;
+      animation: glow 1.5s infinite ease-in-out;
+    }
+
+    .service img {
+      width: 48px;
+      margin-bottom: 0.8em;
+    }
+
+    .service h3 {
+      margin-bottom: 0.5em;
+      color: #007BFF;
+    }
+
+    .service p {
+      margin: 0;
+    }
+
+    .service a {
+      color: inherit;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+    }
+
+    .milestones-section {
+      background-color: #f3f4f6;
+      padding: 40px;
+      border-radius: 10px;
+      margin-top: 40px;
+      text-align: center;
+    }
+    .milestone-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .milestone-icon {
+      font-size: 2.5rem;
+      color: #3b82f6;
+      margin-bottom: 10px;
+    }
+    .milestone-number {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #1f2937;
+    }
+    .milestone-text {
+      font-size: 1rem;
+      color: #4b5563;
+    }
+
+    .footer-divider {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+
+.language-container {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  z-index: 999;
+}
+
+.language-select-wrapper {
+  position: relative;
+  display: inline-block;
+  min-width: 180px;
+}
+
+.language-select {
+  padding: 12px 50px 12px 50px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  font-size: 1em;
+  background-color: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  color: white;
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.language-select:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+.language-select:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2),
+              0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.language-select option {
+  background-color: #2d3748;
+  color: white;
+  padding: 12px;
+  font-size: 0.95em;
+}
+
+.language-icons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+}
+
+.language-globe {
+  width: 20px;
+  height: 20px;
+  stroke: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+.language-arrow {
+  width: 18px;
+  height: 18px;
+  stroke: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+.language-select:hover ~ .language-icons .language-globe,
+.language-select:hover ~ .language-icons .language-arrow {
+  stroke: white;
+}
+
+.language-select:focus ~ .language-icons .language-arrow {
+  transform: rotate(180deg);
+}
+
+
+@keyframes globe-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.language-select:hover ~ .language-icons .language-globe {
+  animation: globe-spin 8s linear infinite;
+}
+  
+    @keyframes glow {
+      0%, 100% {
+        box-shadow:
+          0 0 15px rgba(0, 123, 255, 0.4),
+          0 0 30px rgba(0, 123, 255, 0.2),
+          0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+      50% {
+        box-shadow:
+          0 0 25px rgba(0, 123, 255, 0.6),
+          0 0 40px rgba(0, 123, 255, 0.3),
+          0 8px 24px rgba(0, 0, 0, 0.15);
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<header class="bg-white text-gray-800 p-4 shadow-md">
+  <div class="container mx-auto flex justify-between items-center">
+    <div class="text-2xl font-bold">CitywheelsPk</div>
+    <nav class="space-x-6">
+      <a href="IndexUrdu.html" class="hover:text-blue-600 px-2">ہوم</a>
+      <a href="Entities/UrduEntities/Passenger.html" class="hover:text-blue-600 px-2">مسافر</a>
+      <a href="Entities/UrduEntities/Ride.html" class="hover:text-blue-600 px-2">رائیڈز</a>
+      <a href="Entities/UrduEntities/Vehicle.html" class="hover:text-blue-600 px-2">گاڑیاں</a>
+      <a href="Entities/UrduEntities/Driver.html" class="hover:text-blue-600 px-2">ڈرائیورز</a>
+      <a href="Entities/UrduEntities/feedback.html" class="hover:text-blue-600 px-2">فیڈ بیک</a>
+      <a href="Entities/UrduEntities/maintenance.html" class="hover:text-blue-600 px-2">دیکھ بھال</a>
+      <a href="Entities/UrduEntities/support.html" class="hover:text-blue-600 px-2 mr-3">سپورٹ درخواستیں</a>
+      <a href="Entities/UrduEntities/payment.html" class="hover:text-blue-600 px-2">ادائیگیاں</a>
+      <a href="Entities/UrduEntities/Promotion.html" class="hover:text-blue-600 px-2">پروموشنز</a>
+    </nav>
+  </div>
+</header>
+
+  
+  <div class="relative hero-background h-[500px] bg-cover bg-center flex items-center justify-center">
+
+ 
+    <div class="language-container">
+      <div class="language-select-wrapper">
+        <select id="language-select" class="language-select" onchange="if(this.value) window.location.href=this.value">
+          <option value="" disabled selected hidden>زبان منتخب کریں</option>
+          <option value="index.html" style="font-family: 'Playfair Display', serif;">English</option>
+          <option value="indexUrdu.html" style="font-family: 'Playfair Display', serif;">اردو (Urdu)</option>
+       
+        </select>
+        <div class="language-icons">
+          <svg class="language-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <svg class="language-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="container mx-auto z-10 text-white text-center">
+      <h2 class="text-5xl md:text-6xl font-extrabold mb-6">اپنی سواری بک کروائیں</h2>
+
+      <div class="booking-section max-w-2xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label for="pickup-location" class="sr-only">پک اپ مقام درج کریں</label>
+            <input
+              type="text"
+              id="pickup-location"
+              class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="پک اپ مقام درج کریں"
+            />
+          </div>
+          <div>
+            <label for="dropoff-location" class="sr-only">ڈراپ مقام درج کریں</label>
+            <input
+              type="text"
+              id="dropoff-location"
+              class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="ڈراپ مقام درج کریں"
+            />
+          </div>
+        </div>
+        <div>
+          <a href="Entities/UrduEntities/ride.html">
+            <button
+              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-3 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:shadow-outline w-full"
+            >
+              شروع کریں
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="wrapper">
+    <section class="services">
+   
+      <div class="service">
+        <a href="Entities/UrduEntities/ride.html" class="service-link">
+          <img src="https://img.icons8.com/color/96/car--v1.png" alt="Ride">
+          <h3>سواری بک کریں</h3>
+          <p>تصدیق شدہ ڈرائیورز کے ساتھ تیز اور معقول سواریاں</p>
+        </a>
+      </div>
+
+      <div class="service">
+        <a href="Entities/UrduEntities/driver.html" class="service-link">
+          <img src="https://img.icons8.com/fluency/96/driver.png" alt="Driver">
+          <h3>ڈرائیور بنیں</h3>
+          <p>سٹی وہیلز میں شامل ہوں اور ڈرائیو کرتے ہوئے کمائیں</p>
+        </a>
+      </div>
+
+      <div class="service">
+        <a href="Entities/UrduEntities/passenger.html" class="service-link">
+          <img src="https://img.icons8.com/fluency/96/user-location.png" alt="Passenger">
+          <h3>مسافر معلومات</h3>
+          <p>اپنی مسافر تفصیلات اور پروفائل کا نظم کریں</p>
+        </a>
+      </div>
+
+      <div class="service">
+        <a href="Entities/UrduEntities/vehicle.html" class="service-link">
+          <img src="https://img.icons8.com/fluency/96/sedan.png" alt="Vehicle">
+          <h3>گاڑی کا نظم</h3>
+          <p>اپنی گاڑی کی تفصیلات دیکھیں اور اپ ڈیٹ کریں</p>
+        </a>
+      </div>
+
+      <div class="service">
+        <a href="Entities/UrduEntities/promotion.html" class="service-link">
+          <img src="https://img.icons8.com/fluency/96/discount.png" alt="Promotion">
+          <h3>پروموشنز</h3>
+          <p>تازہ ترین ڈسکاؤنٹس اور پرومو کوڈز چیک کریں</p>
+        </a>
+      </div>
+
+      <div class="service">
+        <a href="Entities/UrduEntities/support.html" class="service-link">
+          <img src="https://img.icons8.com/fluency/96/help.png" alt="Support">
+          <h3>24/7 سپورٹ</h3>
+          <p>مدد چاہیے؟ ہم آپ کے لیے ہر وقت موجود ہیں</p>
+        </a>
+      </div>
+
+      <div class="service">
+        <a href="Entities/UrduEntities/maintenance.html" class="service-link">
+          <img src="https://img.icons8.com/fluency/96/car-service.png" alt="Maintenance">
+          <h3>دیکھ بھال</h3>
+          <p>گاڑی کی دیکھ بھال کو ٹریک اور شیڈول کریں</p>
+        </a>
+      </div>
+
+      <div class="service">
+        <a href="Entities/UrduEntities/payment.html" class="service-link">
+          <img src="https://img.icons8.com/fluency/96/money.png" alt="Payment">
+          <h3>ادائیگی کی معلومات</h3>
+          <p>کرایے، بیلنس اور ادائیگی کے طریقے دیکھیں</p>
+        </a>
+      </div>
+
+      <div class="service">
+        <a href="Entities/UrduEntities/feedback.html" class="service-link">
+          <img src="https://img.icons8.com/fluency/96/speech-bubble.png" alt="Feedback">
+          <h3>فیڈ بیک</h3>
+          <p>اپنا تجربہ اور تجاویز شیئر کریں</p>
+        </a>
+      </div>
+    </section>
+  </div>
+
+
+  <section class="container mx-auto my-12 p-6">
+    <div class="milestones-section">
+      <h3 class="text-3xl font-bold text-gray-800 mb-8">
+        زندگیاں ایک ایک کر کے بدل رہے ہیں
+      </h3>
+      <p class="text-gray-600 text-lg mb-10">حاصل کردہ سنگ میل</p>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="milestone-item">
+           <div class="milestone-icon">🚗</div>
+          <div class="milestone-number">&#x202A;29 M&#x202C;</div>
+          <div class="milestone-text">سفریں</div>
+        </div>
+        <div class="milestone-item">
+          <div class="milestone-icon">🏘</div>
+          <div class="milestone-number">120</div>
+          <div class="milestone-text">شہر</div>
+        </div>
+        <div class="milestone-item">
+          <div class="milestone-icon">👤</div>
+          <div class="milestone-number">&#x202A;8 M&#x202C;</div>
+          <div class="milestone-text">صارفین</div>
+        </div>
+        <div class="milestone-item">
+          <div class="milestone-icon">🚕</div>
+          <div class="milestone-number">&#x202A;0.1 M&#x202C;</div>
+          <div class="milestone-text">ڈرائیورز</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <footer class="bg-gray-900 text-white">
+    <div class="max-w-6xl mx-auto px-6 py-8">
+      <div class="flex flex-wrap justify-between gap-8">
+     
+        <div class="flex-1 min-w-[200px]">
+          <h3 class="text-xl font-bold mb-4">سٹی وہیلز پاکستان</h3>
+          <p class="text-gray-400 mb-2">پاکستان بھر میں قابل اعتماد، تیز رفتار اور محفوظ رائڈ شیئرنگ</p>
+          <p class="text-gray-400 mb-2">📍 لاہور، پاکستان</p>
+          <p class="text-gray-400 mb-2">📞 &#x202A;+92 336 1061946&#x202C;</p>
+          <p class="text-gray-400">
+              ✉ <a href="https://mail.google.com/mail/?view=cm&fs=1&to=support@citywheelspk.com" target="_blank" class="text-gray-400 hover:text-blue-400 underline">
+    support@citywheelspk.com
+  </a>
+          </p>
+        </div>
+
+   
+        <div class="flex-1 min-w-[180px]">
+          <h4 class="text-lg font-semibold mb-4">کمپنی</h4>
+          <ul class="space-y-2">
+            <li><a href="T&C/URAboutUs.html" class="text-gray-400 hover:text-blue-400">ہمارے بارے میں</a></li>
+            <li><a href="T&C/URCareers.html" class="text-gray-400 hover:text-blue-400">کیریئرز</a></li>
+            <li><a href="T&C/URBlog.html" class="text-gray-400 hover:text-blue-400">بلاگ</a></li>
+            <li><a href="T&C/URPress.html" class="text-gray-400 hover:text-blue-400">پریس</a></li>
+          </ul>
+        </div>
+
+        
+        <div class="flex-1 min-w-[180px]">
+          <h4 class="text-lg font-semibold mb-4">سپورٹ</h4>
+          <ul class="space-y-2">
+            <li><a href="T&C/URHelpCentre.html" class="text-gray-400 hover:text-blue-400">ہیلپ سینٹر</a></li>
+            <li><a href="T&C/URSafety.html" class="text-gray-400 hover:text-blue-400">سیفٹی</a></li>
+            <li><a href="T&C/URCommunity.html" class="text-gray-400 hover:text-blue-400">کمیونٹی گائیڈ لائنز</a></li>
+            <li><a href="T&C/URContact.html" class="text-gray-400 hover:text-blue-400">ہم سے رابطہ کریں</a></li>
+          </ul>
+        </div>
+
+ 
+        <div class="flex-1 min-w-[180px]">
+          <h4 class="text-lg font-semibold mb-4">قانونی</h4>
+          <ul class="space-y-2">
+            <li><a href="T&C/URTOS.html" class="text-gray-400 hover:text-blue-400">سروس کی شرائط</a></li>
+            <li><a href="T&C/URPP.html" class="text-gray-400 hover:text-blue-400">پرائیویسی پالیسی</a></li>
+            <li><a href="T&C/URCp.html" class="text-gray-400 hover:text-blue-400">کوکی پالیسی</a></li>
+            <li><a href="T&C/URLisence.html" class="text-gray-400 hover:text-blue-400">لائسنسز</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="border-gray-700 my-6 mx-auto w-[90%]">
+
+      <div class="flex flex-col md:flex-row justify-between items-center px-4">
+        <p class="text-gray-400 text-sm mb-2 md:mb-0">&copy; 2025 سٹی وہیلز پاکستان۔ تمام حقوق محفوظ ہیں۔</p>
+        <div class="flex space-x-4">
+            <span style="margin-left: 15px;">
+          <a href="T&C/URPP.html" class="text-gray-400 hover:text-blue-400 text-sm">پرائیویسی پالیسی</a>
+        </span><span>
+          <a href="T&C/URTOS.html" class="text-gray-400 hover:text-blue-400 text-sm">سروس کی شرائط</a>
+        </span>
+
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

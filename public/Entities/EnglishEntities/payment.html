@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment Receipt | CityWheelsPK</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="CSS/Payment.css">
+  <style>
+    /* Additional CSS for the combo box */
+    .combo-box {
+      position: relative;
+      width: 100%;
+    }
+    
+    .combo-box input {
+      width: 100%;
+      padding: 10px 15px 10px 35px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    .combo-options {
+      position: absolute;
+      width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-top: none;
+      background: white;
+      z-index: 100;
+      display: none;
+    }
+    
+    .combo-options.show {
+      display: block;
+    }
+    
+    .combo-option {
+      padding: 8px 15px;
+      cursor: pointer;
+    }
+    
+    .combo-option:hover {
+      background-color: #f5f5f5;
+    }
+    
+    .input-wrapper i {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #777;
+    }
+    
+    .input-wrapper {
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">CW</div>
+        <h2>CityWheelsPK</h2>
+      </div>
+       <nav>
+        <a href="/index.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="Ride.html"><i class="fas fa-route"></i> Rides</a>
+        <a href="Driver.html"><i class="fas fa-id-card-alt"></i> Drivers</a>
+        <a href="Passenger.html"><i class="fas fa-user-friends"></i>Passengers </a>
+        <a href="Vehicle.html"><i class="fas fa-car"></i> Veicle Management</a>
+        <a href="Promotion.html"><i class="fas fa-percentage"></i> Promotions</a>
+        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+        <a href="maintenance.html"><i class="fas fa-tools"></i> Maintenance</a>
+        <a href="payment.html" class="active"><i class="fas fa-credit-card"></i> Payment</a>
+        <a href="feedback.html"><i class="fas fa-comment-alt"></i>Feedback</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Payment Receipt</h1>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Payment Details</h3>
+        </div>
+
+        <form id="paymentForm" class="receipt-details">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="rideId">Ride ID</label>
+              <div class="input-wrapper combo-box">
+                <i class="fas fa-barcode"></i>
+                <input type="text" id="rideIdInput" placeholder="Type or select Ride ID" autocomplete="off">
+                <div class="combo-options" id="rideOptions">
+                  <div class="combo-option" data-value="601">Ride 601</div>
+                  <div class="combo-option" data-value="602">Ride 602</div>
+                  <div class="combo-option" data-value="603">Ride 603</div>
+                  <div class="combo-option" data-value="604">Ride 604</div>
+                  <div class="combo-option" data-value="605">Ride 605</div>
+                  <div class="combo-option" data-value="606">Ride 606</div>
+                </div>
+                <input type="hidden" id="rideId" name="rideId">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="paymentMethod">Payment Method</label>
+              <div class="input-wrapper">
+                <i class="fas fa-wallet"></i>
+                <select id="paymentMethod" name="paymentMethod">
+                  <option value="Card">Card</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Wallet">Wallet</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="transactionDate">Transaction Date</label>
+              <div class="input-wrapper">
+                <i class="fas fa-calendar-alt"></i>
+                <input type="date" id="transactionDate" name="transactionDate">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="amount">Amount Paid (PKR)</label>
+              <div class="input-wrapper">
+                <i class="fas fa-money-bill-wave"></i>
+                <input type="number" step="0.01" id="amount" name="amount">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="paymentStatus">Payment Status</label>
+              <div class="input-wrapper">
+                <i class="fas fa-check-circle"></i>
+                <select id="paymentStatus" name="paymentStatus">
+                  <option value="Completed">Completed</option>
+                  <option value="Pending">Pending</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div class="support-text">Need assistance? <a href="/T&C/Contact.html">Contact Support</a></div>
+            <button type="submit" class="btn"><i class="fas fa-check"></i> Confirm Payment</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+  <script>
+    // Combo box functionality
+    const rideIdInput = document.getElementById('rideIdInput');
+    const rideOptions = document.getElementById('rideOptions');
+    const hiddenRideId = document.getElementById('rideId');
+    const options = document.querySelectorAll('.combo-option');
+    
+    // Show options when input is focused
+    rideIdInput.addEventListener('focus', () => {
+      rideOptions.classList.add('show');
+      filterOptions();
+    });
+    
+    // Hide options when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!rideIdInput.contains(e.target) && !rideOptions.contains(e.target)) {
+        rideOptions.classList.remove('show');
+      }
+    });
+    
+    // Filter options based on input
+    rideIdInput.addEventListener('input', filterOptions);
+    
+    function filterOptions() {
+      const searchTerm = rideIdInput.value.toLowerCase();
+      options.forEach(option => {
+        const text = option.textContent.toLowerCase();
+        if (text.includes(searchTerm)) {
+          option.style.display = 'block';
+        } else {
+          option.style.display = 'none';
+        }
+      });
+    }
+    
+    // Select option
+    options.forEach(option => {
+      option.addEventListener('click', () => {
+        rideIdInput.value = option.textContent;
+        hiddenRideId.value = option.getAttribute('data-value');
+        rideOptions.classList.remove('show');
+      });
+    });
+    
+    // Allow custom input
+    rideIdInput.addEventListener('change', () => {
+      hiddenRideId.value = rideIdInput.value;
+    });
+    
+    // Form submission
+    document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Make sure we're using the correct ride ID value
+      if (!hiddenRideId.value && rideIdInput.value) {
+        hiddenRideId.value = rideIdInput.value;
+      }
+      
+      const formData = {
+        rideId: hiddenRideId.value,
+        paymentMethod: document.getElementById('paymentMethod').value,
+        amount: document.getElementById('amount').value,
+        paymentStatus: document.getElementById('paymentStatus').value
+      };
+
+      try {
+        const response = await fetch('/api/payments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        
+        const result = await response.json();
+        
+        if (!response.ok) throw new Error(result.error || 'Failed to record payment');
+        
+        alert(`✅ Payment recorded successfully! ID: ${result.paymentId}`);
+        document.getElementById('paymentForm').reset();
+      } catch (err) {
+        alert(`❌ Error: ${err.message}`);
+        console.error('Error:', err);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Support Request | CityWheelsPK</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="CSS/Support.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">CW</div>
+        <h2>CityWheelsPK</h2>
+      </div>
+       <nav>
+        <a href="/index.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="Ride.html"><i class="fas fa-route"></i> Rides</a>
+        <a href="Driver.html"><i class="fas fa-id-card-alt"></i> Drivers</a>
+        <a href="Passenger.html"><i class="fas fa-user-friends"></i>Passengers </a>
+        <a href="Vehicle.html"><i class="fas fa-car"></i> Veicle Management</a>
+        <a href="Promotion.html"><i class="fas fa-percentage"></i> Promotions</a>
+        <a href="support.html" class="active"><i class="fas fa-headset"></i> Support</a>
+        <a href="maintenance.html"><i class="fas fa-tools"></i> Maintenance</a>
+        <a href="payment.html"><i class="fas fa-credit-card"></i> Payment</a>
+        <a href="feedback.html"><i class="fas fa-comment-alt"></i>Feedback</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Support Center</h1>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Submit Support Request</h3>
+        </div>
+
+        <form id="supportForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="ride">Ride</label>
+              <div class="input-wrapper">
+                <i class="fas fa-route"></i>
+                <select id="ride" name="ride">
+                  <option value="" disabled selected>Select a Ride</option>
+                  <option value="601">Ali Raza : Toyota</option>
+                  <option value="602">Ahmed Khan : Honda</option>
+                  <option value="603">Bilal Tariq : Suzuki</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="passenger">Passenger</label>
+              <div class="input-wrapper">
+                <i class="fas fa-user"></i>
+                <select id="passenger" name="passenger">
+                  <option value="" disabled selected>Select a Passenger</option>
+                  <option value="201">Ayesha Noor</option>
+                  <option value="202">Zain Malik</option>
+                  <option value="203">Fatima Shah</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="status">Resolution Status</label>
+              <div class="input-wrapper">
+                <i class="fas fa-check-circle"></i>
+                <select id="status" name="status">
+                  <option>Pending</option>
+                  <option>Resolved</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="date">Date Submitted</label>
+              <div class="input-wrapper">
+                <i class="fas fa-calendar-alt"></i>
+                <input type="datetime-local" id="date" name="date" required>
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="issue">Issue Description</label>
+              <textarea id="issue" name="issue" placeholder="Describe the issue..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div class="support-text">Need immediate help? 
+              <a href="/T&C/Contact.html" style="color: var(--primary); text-decoration: underline;">Call Support</a>
+            </div>
+            <button type="submit" class="btn">
+              <i class="fas fa-paper-plane"></i> Submit Request
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+  <script>
+    document.getElementById('supportForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const formData = {
+    rideId: document.getElementById('ride').value,
+    passengerId: document.getElementById('passenger').value,
+    issueDescription: document.getElementById('issue').value
+  };
+
+  try {
+    const response = await fetch('/api/support', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+    
+    const result = await response.json();
+    
+    if (!response.ok) throw new Error(result.error || 'Failed to submit request');
+    
+    alert(`✅ Support request submitted successfully! ID: ${result.requestId}`);
+    document.getElementById('supportForm').reset();
+  } catch (err) {
+    alert(`❌ Error: ${err.message}`);
+    console.error('Error:', err);
+  }
+});
+  </script>
+</body>
+</html>

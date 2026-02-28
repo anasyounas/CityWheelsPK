@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feedback | CityWheelsPK</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="CSS/Feedback.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">CW</div>
+        <h2>CityWheelsPK</h2>
+      </div>
+          <nav>
+        <a href="/index.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="Ride.html"><i class="fas fa-route"></i> Rides</a>
+        <a href="Driver.html"><i class="fas fa-id-card-alt"></i> Drivers</a>
+        <a href="Passenger.html"><i class="fas fa-user-friends"></i>Passengers </a>
+        <a href="Vehicle.html"><i class="fas fa-car"></i> Veicle Management</a>
+        <a href="Promotion.html"><i class="fas fa-percentage"></i> Promotions</a>
+        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+        <a href="maintenance.html"><i class="fas fa-tools"></i> Maintenance</a>
+        <a href="payment.html"><i class="fas fa-credit-card"></i> Payment</a>
+        <a href="feedback.html" class="active"><i class="fas fa-comment-alt"></i>Feedback</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Ride Feedback</h1>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Submit Your Feedback</h3>
+        </div>
+
+        <!-- Replace the form section in feedback.html with this: -->
+<form id="feedbackForm">
+  <div class="form-grid">
+    <div class="form-group">
+      <label for="rideId">Ride</label>
+      <div class="input-wrapper">
+        <i class="fas fa-route"></i>
+        <select id="rideId" name="rideId" required>
+          <option value="">Select a ride</option>
+          <!-- Options will be populated by JavaScript -->
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="fromUserId">Passenger</label>
+      <div class="input-wrapper">
+        <i class="fas fa-user"></i>
+        <select id="fromUserId" name="fromUserId" required>
+          <option value="">Select passenger</option>
+          <!-- Options will be populated by JavaScript -->
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="toUserId">Driver</label>
+      <div class="input-wrapper">
+        <i class="fas fa-id-card-alt"></i>
+        <select id="toUserId" name="toUserId" required>
+          <option value="">Select driver</option>
+          <!-- Options will be populated by JavaScript -->
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="rating">Rating</label>
+      <div class="input-wrapper">
+        <i class="fas fa-star"></i>
+        <select id="rating" name="rating" required>
+          <option value="">Select rating</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="1">1 ⭐</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group full-width">
+      <label for="comments">Comments</label>
+      <textarea id="comments" name="comments" placeholder="Your thoughts about the ride..."></textarea>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <div class="support-text">Need assistance? <a href="/T&C/Contact.html">Contact Support</a></div>
+    <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Submit Feedback</button>
+  </div>
+</form>
+
+<script>
+  // Fetch and populate dropdowns when page loads
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      // Fetch rides
+      const ridesResponse = await fetch('/api/rides-for-feedback');
+      const rides = await ridesResponse.json();
+      const rideSelect = document.getElementById('rideId');
+      
+      if (rides.length === 0) {
+        const option = document.createElement('option');
+        option.value = "";
+        option.textContent = "No completed rides available";
+
+      } else {
+        rides.forEach(ride => {
+          const option = document.createElement('option');
+          option.value = ride.RideID;
+          option.textContent = `Ride #${ride.RideID} [${ride.RideStatus}] - ${ride.DateTime.split('T')[0]} - ${ride.PickUpLocation} to ${ride.DropOffLocation}`;
+          rideSelect.appendChild(option);
+        });
+      }
+
+     
+      // Fetch passengers
+      const passengersResponse = await fetch('/api/passengers');
+      const passengers = await passengersResponse.json();
+      const passengerSelect = document.getElementById('fromUserId');
+      
+      passengers.forEach(passenger => {
+        const option = document.createElement('option');
+        option.value = passenger.PassengerID;
+        option.textContent = `${passenger.Name}`;
+        passengerSelect.appendChild(option);
+      });
+
+      // Fetch drivers
+      const driversResponse = await fetch('/api/drivers');
+      const drivers = await driversResponse.json();
+      const driverSelect = document.getElementById('toUserId');
+      
+      drivers.forEach(driver => {
+        const option = document.createElement('option');
+        option.value = driver.DriverID;
+        option.textContent = `${driver.Name}`;
+        driverSelect.appendChild(option);
+      });
+
+      // Auto-populate driver and passenger based on ride selection
+      rideSelect.addEventListener('change', (e) => {
+        const selectedRide = rides.find(r => r.RideID.toString() === e.target.value);
+        if (selectedRide) {
+          // Find and select the matching passenger
+          Array.from(passengerSelect.options).forEach(option => {
+            if (option.textContent === selectedRide.PassengerName) {
+              passengerSelect.value = option.value;
+            }
+          });
+
+          // Find and select the matching driver
+          Array.from(driverSelect.options).forEach(option => {
+            if (option.textContent === selectedRide.DriverName) {
+              driverSelect.value = option.value;
+            }
+          });
+        }
+      });
+
+    } catch (err) {
+      console.error('Error loading dropdown data:', err);
+      alert('Failed to load form data. Please try again later.');
+    }
+  });
+
+  // Form submission handler
+  document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = {
+      rideId: document.getElementById('rideId').value,
+      fromUserId: document.getElementById('fromUserId').value,
+      toUserId: document.getElementById('toUserId').value,
+      rating: document.getElementById('rating').value,
+      comments: document.getElementById('comments').value
+    };
+
+    // Validate required fields
+    if (!formData.rideId || !formData.fromUserId || !formData.toUserId || !formData.rating) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      const result = await response.json();
+      
+      if (!response.ok) throw new Error(result.error || 'Failed to submit feedback');
+      
+      alert(`✅ Feedback submitted successfully!`);
+      document.getElementById('feedbackForm').reset();
+    } catch (err) {
+      alert(`❌ Error: ${err.message}`);
+      console.error('Error:', err);
+    }
+  });
+</script>
+</body>
+</html>

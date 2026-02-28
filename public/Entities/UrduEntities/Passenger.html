@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>مسافر پروفائل | سٹی وہیلز پاکستان</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="CSS/Passenger.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">CW</div>
+          <h2>CityWheelsPK</h2>
+      </div>
+        <nav>
+        <a href="/IndexUrdu.html"><i class="fas fa-home"></i> ڈیش بورڈ</a>
+     <a href="Ride.html"><i class="fas fa-route"></i> رائڈز</a>
+        <a href="Driver.html"><i class="fas fa-id-card-alt"></i> ڈرائیورز</a>
+        <a href="Passenger.html" class="active"><i class="fas fa-user-friends"></i>مسافر </a>
+        <a href="Vehicle.html"><i class="fas fa-car"></i> گاڑی کا انتظام</a>
+        <a href="Promotion.html"><i class="fas fa-percentage"></i> پروموشنز</a>
+        <a href="support.html"><i class="fas fa-headset"></i> سپورٹ</a>
+        <a href="maintenance.html" ><i class="fas fa-tools"></i> مرمت</a>
+        <a href="payment.html"><i class="fas fa-credit-card"></i> ادائیگی</a>
+        <a href="feedback.html"><i class="fas fa-comment-alt"></i>فیڈ بیک</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>مسافر پروفائل</h1>
+          <p>مسافر کی معلومات اور ترجیحات کا انتظام کریں</p>
+        </div>
+        <div class="user-profile">
+          <div class="user-info">
+            <!-- آپ اگر چاہیں تو یہاں صارف کی معلومات شامل کر سکتے ہیں -->
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>مسافر کی معلومات میں ترمیم کریں</h3>
+          <p>اس مسافر کے لیے ذاتی تفصیلات اور سواری کی ترجیحات اپ ڈیٹ کریں</p>
+        </div>
+
+        <form id="passengerForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">مکمل نام</label>
+              <div class="input-wrapper">
+                <i class="fas fa-user"></i>
+                <input type="text" id="name" name="name" placeholder="مکمل نام درج کریں" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="contact">رابطہ نمبر</label>
+              <div class="input-wrapper">
+                <i class="fas fa-phone"></i>
+                <input type="tel" id="contact" name="contact" placeholder="03XXXXXXXXX"required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">ای میل ایڈریس</label>
+              <div class="input-wrapper">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="payment">ترجیحی ادائیگی</label>
+              <div class="input-wrapper">
+                <i class="fas fa-credit-card"></i>
+                <select id="payment" name="payment">
+                  <option value="" disabled>طریقہ منتخب کریں</option>
+                  <option selected>کریڈٹ/ڈیبٹ کارڈ</option>
+                  <option>نقد</option>
+                  <option>موبائل والٹ</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="address">گھر کا پتہ</label>
+              <div class="input-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" id="address" name="address" placeholder="گھر کا پتہ درج کریں">
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="preferences">سواری کی ترجیحات</label>
+              <textarea id="preferences" name="preferences" placeholder="مثال: ترجیحی ڈرائیور جنس، راستے کے مشورے، موسیقی کی ترجیحات">انگریزی بولنے والے ڈرائیورز کو ترجیح دیتے ہیں، تمباکو نوشی نہیں، درمیانی اے سی کی درجہ حرارت</textarea>
+            </div>
+
+            <div class="form-group full-width">
+              <label>مسافر کی درجہ بندی</label>
+              <div class="rating-container">
+                <div class="rating-value">4.5</div>
+                <div class="rating-stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+              <input type="hidden" id="rating" name="rating" value="4.5">
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <div class="support">
+              مدد درکار ہے؟ <a href="/T&C/URContact.html"><i class="fas fa-question-circle"></i> سپورٹ سے رابطہ کریں</a>
+            </div>
+            <button type="submit" class="btn"><i class="fas fa-save"></i> تبدیلیاں محفوظ کریں</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.getElementById('passengerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const data = {
+        name: document.getElementById('name').value,
+        contactNo: document.getElementById('contactNo').value,
+        email: document.getElementById('email').value,
+        paymentDetails: document.getElementById('payment').value,
+        rating: document.getElementById('rating').value
+      };
+
+      try {
+        const response = await fetch('/api/passengers', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        
+        if (!response.ok) throw new Error(await response.text());
+        
+        const result = await response.json();
+        alert(`✅ Success! Passenger ID: ${result.passengerId}`);
+        document.getElementById('passengerForm').reset();
+      } catch (err) {
+        alert(`❌ Error: ${err.message}`);
+        console.error("Full error:", err);
+      }
+    });
+  </script>
+</body>
+</html>

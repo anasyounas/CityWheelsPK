@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ride Booking | CityWheelsPK</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="CSS/Ride.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">CW</div>
+        <h2>CityWheelsPK</h2>
+      </div>
+       <nav>
+        <a href="/index.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="Ride.html" class="active"><i class="fas fa-route"></i> Rides</a>
+        <a href="Driver.html"><i class="fas fa-id-card-alt"></i> Drivers</a>
+        <a href="Passenger.html"><i class="fas fa-user-friends"></i>Passengers </a>
+        <a href="Vehicle.html"><i class="fas fa-car"></i> Veicle Management</a>
+        <a href="Promotion.html"><i class="fas fa-percentage"></i> Promotions</a>
+        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+        <a href="maintenance.html"><i class="fas fa-tools"></i> Maintenance</a>
+        <a href="payment.html"><i class="fas fa-credit-card"></i> Payment</a>
+        <a href="feedback.html"><i class="fas fa-comment-alt"></i>Feedback</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Book a Ride</h1>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Ride Booking Details</h3>
+        </div>
+
+        <form id="rideForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="pickup">Pick-Up Location</label>
+              <div class="input-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" id="pickup" name="pickup" placeholder="Enter pickup point" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="dropoff">Drop-Off Location</label>
+              <div class="input-wrapper">
+                <i class="fas fa-flag-checkered"></i>
+                <input type="text" id="dropoff" name="dropoff" placeholder="Enter drop-off point" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="datetime">Date & Time</label>
+              <div class="input-wrapper">
+                <i class="fas fa-calendar-alt"></i>
+                <input type="datetime-local" id="datetime" name="datetime" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="passenger">Passenger</label>
+              <div class="input-wrapper">
+                <i class="fas fa-user"></i>
+                <select id="passenger" name="passenger" required>
+                  <option value="" disabled selected>Select a Passenger</option>
+                  <option value="201">Ayesha Noor</option>
+                  <option value="202">Zain Malik</option>
+                  <option value="203">Fatima Shah</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="driver">Driver</label>
+              <div class="input-wrapper">
+                <i class="fas fa-id-card-alt"></i>
+                <select id="driver" name="driver" required>
+                  <option value="" disabled selected>Select a driver</option>
+                  <option value="101">Ali Raza</option>
+                  <option value="102">Ahmed Khan</option>
+                  <option value="103">Bilal Tariq</option>
+                </select>
+              </div>
+            </div>
+
+           
+<div class="form-group">
+  <label for="vehicle">Vehicle</label>
+  <div class="input-wrapper">
+    <i class="fas fa-car"></i>
+    <select id="vehicle" name="vehicle" required>
+      <option value="" disabled selected>Loading vehicles...</option>
+    </select>
+  </div>
+</div>
+
+            <div class="form-group">
+              <label for="promo">Promo Code (optional)</label>
+              <div class="input-wrapper">
+                <i class="fas fa-tag"></i>
+                <select id="promo" name="promo">
+                  <option value="">None</option>
+                  <option value="401">SAVE10</option>
+                  <option value="402">RIDE20</option>
+                  <option value="403">CITY5</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="fare">Fare (PKR)</label>
+              <div class="input-wrapper">
+                <i class="fas fa-money-bill-wave"></i>
+                <input type="number" id="fare" name="fare" step="0.01" placeholder="e.g. 650.00" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="status">Ride Status</label>
+              <div class="input-wrapper">
+                <i class="fas fa-info-circle"></i>
+                <select id="status" name="status" required>
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <div class="support-text">Need assistance? <a href="/T&C/Contact.html">Contact Support</a></div>
+              <button type="submit" class="btn"><i class="fas fa-check-circle"></i> Confirm Booking</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+  <script>
+ document.addEventListener('DOMContentLoaded', function() {
+    // Set default datetime
+    document.getElementById('datetime').value = new Date().toISOString().slice(0, 16);
+    
+    // Hardcode vehicle options that match your database
+    const vehicles = [
+        {VehicleID: 301, Make: 'Toyota', LicensePlate: 'LEA-1234'},
+        {VehicleID: 302, Make: 'Honda', LicensePlate: 'LHR-5678'},
+        {VehicleID: 303, Make: 'Suzuki', LicensePlate: 'ISB-9012'}
+    ];
+    
+    // Populate vehicle dropdown
+    const vehicleSelect = document.getElementById('vehicle');
+    vehicleSelect.innerHTML = '<option value="" disabled selected>Select Vehicle</option>';
+    
+    vehicles.forEach(vehicle => {
+        const option = document.createElement('option');
+        option.value = vehicle.VehicleID;
+        option.textContent = `${vehicle.Make} (${vehicle.LicensePlate})`;
+        vehicleSelect.appendChild(option);
+    });
+
+    // Form submission
+    document.getElementById('rideForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            pickUpLocation: document.getElementById('pickup').value,
+            dropOffLocation: document.getElementById('dropoff').value,
+            passenger: document.getElementById('passenger').value,
+            driver: document.getElementById('driver').value,
+            vehicle: document.getElementById('vehicle').value
+        };
+        
+        try {
+            const response = await fetch('/api/rides', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok) {
+                alert(`SUCCESS! ${result.message}\nDriver: ${result.driverName}\nVehicle: ${result.vehicleMake}\nFare: PKR ${result.fare}`);
+                // Clear form
+                document.getElementById('pickup').value = '';
+                document.getElementById('dropoff').value = '';
+            } else {
+                throw new Error(result.error || 'Booking failed');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert(`ERROR: ${error.message}`);
+        }
+    });
+});
+</script>
+</body>
+</html>

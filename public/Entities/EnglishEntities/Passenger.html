@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Passenger Profile | CityWheelsPK</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="CSS/Passenger.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">CW</div>
+        <h2>CityWheelsPK</h2>
+      </div>
+      <nav>
+        <a href="/index.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="Ride.html"><i class="fas fa-route"></i> Rides</a>
+        <a href="Driver.html"><i class="fas fa-id-card-alt"></i> Drivers</a>
+        <a href="Passenger.html" class="active"><i class="fas fa-user-friends"></i>Passengers </a>
+        <a href="Vehicle.html"><i class="fas fa-car"></i> Vehicle Management</a>
+        <a href="Promotion.html"><i class="fas fa-percentage"></i> Promotions</a>
+        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+        <a href="maintenance.html"><i class="fas fa-tools"></i> Maintenance</a>
+        <a href="payment.html"><i class="fas fa-credit-card"></i> Payment</a>
+        <a href="feedback.html"><i class="fas fa-comment-alt"></i>Feedback</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Passenger Profile</h1>
+          <p>Manage passenger information and preferences</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Edit Passenger Information</h3>
+          <p>Update personal details and ride preferences for this passenger</p>
+        </div>
+
+        <form id="passengerForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <div class="input-wrapper">
+                <i class="fas fa-user"></i>
+                <input type="text" id="name" name="name" placeholder="Enter full name" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="contactNo">Contact Number</label>
+              <div class="input-wrapper">
+                <i class="fas fa-phone"></i>
+                <input type="tel" id="contactNo" name="contactNo" placeholder="03XXXXXXXXX" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <div class="input-wrapper">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="payment">Preferred Payment</label>
+              <div class="input-wrapper">
+                <i class="fas fa-credit-card"></i>
+                <select id="payment" name="paymentDetails">
+                  <option value="" disabled selected>Select method</option>
+                  <option>Credit/Debit Card</option>
+                  <option>Cash</option>
+                  <option>Mobile Wallet</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="address">Home Address</label>
+              <div class="input-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" id="address" name="address" placeholder="Enter home address">
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="preferences">Ride Preferences</label>
+              <textarea id="preferences" name="preferences" placeholder="E.g., preferred driver gender, route tips, music preferences">Prefers English speaking drivers, no smoking, moderate AC temperature</textarea>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="rating">Passenger Rating</label>
+              <div class="rating-select-wrapper">
+                <i class="fas fa-star"></i>
+                <select id="rating" name="rating" class="rating-select">
+                  <option value="1">★ (1 - Poor)</option>
+                  <option value="2">★★ (2 - Fair)</option>
+                  <option value="3">★★★ (3 - Good)</option>
+                  <option value="4" selected>★★★★ (4 - Very Good)</option>
+                  <option value="5">★★★★★ (5 - Excellent)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <div class="support">
+              Need assistance? <a href="/T&C/Contact.html"><i class="fas fa-question-circle"></i> Contact Support</a>
+            </div>
+            <button type="submit" class="btn"><i class="fas fa-save"></i> Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.getElementById('passengerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const data = {
+        name: document.getElementById('name').value,
+        contactNo: document.getElementById('contactNo').value,
+        email: document.getElementById('email').value,
+        paymentDetails: document.getElementById('payment').value,
+        rating: document.getElementById('rating').value
+      };
+
+      try {
+        const response = await fetch('/api/passengers', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        
+        if (!response.ok) throw new Error(await response.text());
+        
+        const result = await response.json();
+        alert(`✅ Success! Passenger ID: ${result.passengerId}`);
+        document.getElementById('passengerForm').reset();
+      } catch (err) {
+        alert(`❌ Error: ${err.message}`);
+        console.error("Full error:", err);
+      }
+    });
+  </script>
+</body>
+</html>
